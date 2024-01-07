@@ -663,7 +663,7 @@ void Game::EmptyCells(std::vector<int>& sudoku)
 		sudokuMakerHelper.erase(sudokuMakerHelper.begin() + indexRemoverHelper);
 		std::vector<int> solveTestCopy{ sudoku };
 		SolveSudoku(solveTestCopy);
-		if (m_AmountOfSolutions > 1)
+		if (m_AmountOfSolutions != 1)
 		{
 			sudoku[lastThrownIndex] = lastThrownInt;
 		}
@@ -697,7 +697,10 @@ std::vector<int> Game::SolveSudoku(std::vector<int>& sudoku)
 			}
 			sudoku[0] = GetRandInt(testValues);
 		}
-		FillNextNumberSolver(1, sudoku);
+		if (FillNextNumberSolver(1, sudoku))
+		{
+			return sudoku;
+		}
 	}
 	return std::vector<int>{};
 }
